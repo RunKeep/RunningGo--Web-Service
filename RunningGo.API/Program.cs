@@ -1,3 +1,11 @@
+using Microsoft.EntityFrameworkCore;
+using RunningGo.API.Shared.Domain.Repositories;
+using RunningGo.API.Shared.Domain.Services;
+using RunningGo.API.Shared.Mapping;
+using RunningGo.API.Shared.Persistence.Contexts;
+using RunningGo.API.Shared.Persistence.Repositories;
+using RunningGo.API.Shared.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,7 +15,27 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<EnhancedDbContext>(options => options.UseMySQL(connectionString)
+    .LogTo(Console.WriteLine, LogLevel.Information).EnableServiceProviderCaching()
+    .EnableDetailedErrors());
+
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+builder.Services.AddAutoMapper(typeof(ModelToResourceProfile),
+    typeof(ResourceToModelProfile));
+
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+using (var context = scope.ServiceProvider.GetService<EnhancedDbContext>())
+{
+    context.Database.EnsureCreated();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
