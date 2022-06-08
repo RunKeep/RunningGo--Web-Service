@@ -1,4 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using RunningGo.API.Dietas.Domain.Repositories;
+using RunningGo.API.Dietas.Domain.Services;
+using RunningGo.API.Dietas.Persistence.Repositories;
+using RunningGo.API.Dietas.Services;
 using RunningGo.API.Shared.Domain.Repositories;
 using RunningGo.API.Shared.Domain.Services;
 using RunningGo.API.Shared.Mapping;
@@ -25,6 +29,9 @@ builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+builder.Services.AddScoped<IFoodRepository, FoodRepository>();
+builder.Services.AddScoped<IFoodService, FoodService>();
 
 builder.Services.AddAutoMapper(typeof(ModelToResourceProfile),
     typeof(ResourceToModelProfile));

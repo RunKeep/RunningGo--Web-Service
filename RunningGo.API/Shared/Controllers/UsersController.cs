@@ -49,7 +49,7 @@ public class UsersController: ControllerBase
         if (!result.Success)
             return BadRequest(result.Message);
         var userResource = _mapper.Map<User, UserResource>(result.Resource);
-        return Ok(userResource);
+        return Created(nameof(Create),userResource);
     }
 
     [HttpPut("{id}")]
