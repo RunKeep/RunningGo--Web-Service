@@ -36,7 +36,7 @@ public class EnhancedDbContext : DbContext
         builder.Entity<Food>().Property(p => p.Calories).IsRequired();
         builder.Entity<Food>().Property(p => p.Vitamins).IsRequired();
         builder.Entity<Food>().Property(p => p.Quantity).IsRequired();
-        
+
         builder.UseSnakeCaseNamingConvention();
     }
 }
