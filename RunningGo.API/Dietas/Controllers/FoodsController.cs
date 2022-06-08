@@ -7,6 +7,7 @@ using RunningGo.API.Shared.Extensions;
 
 namespace RunningGo.API.Dietas.Controllers;
 
+[ApiController]
 [Route("/api/v1/[controller]")]
 public class FoodsController: ControllerBase
 {

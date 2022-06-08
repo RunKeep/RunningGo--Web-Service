@@ -20,5 +20,5 @@ public class SaveDietResource
     public int FoodId { set; get; }
     
     [Required]
-    public int UserId { set; get; }
+    public long UserId { set; get; }
 }

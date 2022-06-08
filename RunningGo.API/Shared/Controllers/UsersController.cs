@@ -7,6 +7,7 @@ using RunningGo.API.Shared.Resources;
 
 namespace RunningGo.API.Shared.Controllers;
 
+[ApiController]
 [Route("/api/v1/[controller]")]
 public class UsersController: ControllerBase
 {

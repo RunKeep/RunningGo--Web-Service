@@ -13,5 +13,6 @@ public class ModelToResourceProfile: Profile
         CreateMap<User, UserResource>();
         
         CreateMap<Food, FoodResource>();
+        CreateMap<Diet, DietResource>();
     }
 }
