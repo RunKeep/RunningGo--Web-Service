@@ -7,6 +7,7 @@ using RunningGo.API.Shared.Resources;
 
 namespace RunningGo.API.Shared.Controllers;
 
+[ApiController]
 [Route("/api/v1/[controller]")]
 public class UsersController: ControllerBase
 {
@@ -49,7 +50,7 @@ public class UsersController: ControllerBase
         if (!result.Success)
             return BadRequest(result.Message);
         var userResource = _mapper.Map<User, UserResource>(result.Resource);
-        return Ok(userResource);
+        return Created(nameof(Create),userResource);
     }
 
     [HttpPut("{id}")]
