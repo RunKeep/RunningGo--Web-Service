@@ -25,6 +25,10 @@ public class FoodService: IFoodService
 
     public async Task<FoodResponse> Save(Food model)
     {
+        var existingFoodWithName = await _foodRepository.FindByName(model.Name);
+        if (existingFoodWithName != null)
+            return new FoodResponse($"A food with name {model.Name} already exists.");
+        
         try
         {
             await _foodRepository.Add(model);
@@ -33,7 +37,7 @@ public class FoodService: IFoodService
         }
         catch (Exception e)
         {
-            return new FoodResponse($"An exception ocurred while adding food: {e.Message}");
+            return new FoodResponse($"An exception occurred while adding food: {e.Message}");
         }
     }
 
@@ -65,6 +69,15 @@ public class FoodService: IFoodService
         var food = await _foodRepository.FindById(id);
         if (food == null)
             return new FoodResponse("This food isn't registered.");
-        return new FoodResponse(food);
+        try
+        {
+            _foodRepository.Remove(food);
+            await _unitOfWork.Complete();
+            return new FoodResponse(food);
+        }
+        catch (Exception e)
+        {
+            return new FoodResponse($"An error ocurred while saving food: {e.Message}");
+        }
     }
 }

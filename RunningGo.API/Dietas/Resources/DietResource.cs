@@ -11,6 +11,5 @@ public class DietResource
     
     //Relationships
     public FoodResource Food { set; get; }
-    
-    public UserResource User { set; get; }
+    public long UserId { set; get; }
 }

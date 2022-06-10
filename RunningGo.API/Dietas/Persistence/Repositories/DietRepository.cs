@@ -14,7 +14,8 @@ public class DietRepository: BaseRepository, IDietRepository
 
     public async Task<IEnumerable<Diet>> List()
     {
-        return await _context.Diets.ToListAsync();
+        return await _context.Diets.Include(p=> p.Food).
+            ToListAsync();
     }
 
     public async Task Add(Diet diet)

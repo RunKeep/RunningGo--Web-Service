@@ -35,7 +35,7 @@ public class UserService: IUserService
         }
         catch (Exception e)
         {
-            return new UserResponse($"An exception ocurred while registrating user: {e.Message}");
+            return new UserResponse($"An exception occurred while registrating user: {e.Message}");
         }
     }
 

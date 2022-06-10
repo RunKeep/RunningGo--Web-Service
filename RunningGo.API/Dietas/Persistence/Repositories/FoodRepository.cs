@@ -27,6 +27,11 @@ public class FoodRepository: BaseRepository, IFoodRepository
         return await _context.Foods.FindAsync(id);
     }
 
+    public async Task<Food> FindByName(string title)
+    {
+        return await _context.Foods.FirstOrDefaultAsync(p => p.Name == p.Name);
+    }
+
     public void Update(Food food)
     {
         _context.Foods.Update(food);

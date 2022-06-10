@@ -9,12 +9,16 @@ namespace RunningGo.API.Dietas.Services;
 public class DietService: IDietService
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IFoodRepository _foodRepository;
     private readonly IDietRepository _dietRepository;
+    private readonly IUserRepository _userRepository;
 
-    public DietService(IUnitOfWork unitOfWork, IDietRepository dietRepository)
+    public DietService(IUnitOfWork unitOfWork, IDietRepository dietRepository, IFoodRepository foodRepository, IUserRepository userRepository)
     {
         _unitOfWork = unitOfWork;
         _dietRepository = dietRepository;
+        _foodRepository = foodRepository;
+        _userRepository = userRepository;
     }
 
     public async Task<IEnumerable<Diet>> List()
@@ -24,6 +28,14 @@ public class DietService: IDietService
 
     public async Task<DietResponse> Save(Diet model)
     {
+        var food = await _foodRepository.FindById(model.FoodId);
+        if (food == null)
+            return new DietResponse($"Food with id {model.FoodId} doesn't exist. Verify if you have registered that food.");
+        
+        var user = await _userRepository.FindById(model.UserId);
+        if (user == null)
+            return new DietResponse($"User with id {model.UserId} doesn't exist. Verify if you have registered that user.");
+        
         try
         {
             await _dietRepository.Add(model);
@@ -39,9 +51,23 @@ public class DietService: IDietService
     public async Task<DietResponse> Update(int id, Diet model)
     {
         var existingDiet = await _dietRepository.FindById(id);
-        if (existingDiet != null)
-            return new DietResponse("This diet doesn't exist. Please create it.");
+        if (existingDiet == null)
+            return new DietResponse($"Diet with id {id} doesn't exist. Please create it.");
 
+        var food = await _foodRepository.FindById(model.FoodId);
+        Console.WriteLine("-------------------------------------------------------------------------------------");
+        Console.WriteLine(model.FoodId);
+        Console.WriteLine("-------------------------------------------------------------------------------------");
+        if (food == null)
+            return new DietResponse($"Food with id {model.FoodId} doesn't exist. Verify if you have registered that user.");
+        
+        var user = await _userRepository.FindById(model.UserId);
+        Console.WriteLine("-------------------------------------------------------------------------------------");
+        Console.WriteLine(model.UserId);
+        Console.WriteLine("-------------------------------------------------------------------------------------");
+        if (user == null)
+            return new DietResponse($"User with id {model.UserId} doesn't exist. Verify if you have registered that food.");
+        
         existingDiet.Description = model.Description;
         existingDiet.Specs = model.Specs;
         existingDiet.Duration = model.Duration;
@@ -61,7 +87,7 @@ public class DietService: IDietService
     public async Task<DietResponse> Delete(int id)
     {
         var existingDiet = await _dietRepository.FindById(id);
-        if (existingDiet != null)
+        if (existingDiet == null)
             return new DietResponse("Diet doesn't exist.");
         
         try
