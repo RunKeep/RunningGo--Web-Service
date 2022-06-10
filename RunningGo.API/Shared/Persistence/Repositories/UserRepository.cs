@@ -26,6 +26,12 @@ public class UserRepository: BaseRepository, IUserRepository
         return await _context.Users.FindAsync(id);
     }
 
+    public async Task<User> FindByFullName(string name, string lastName)
+    {
+        return await _context.Users
+            .FirstOrDefaultAsync(p => p.Name == name && p.LastName == lastName);
+    }
+
     public void Update(User user)
     {
         _context.Users.Update(user);
