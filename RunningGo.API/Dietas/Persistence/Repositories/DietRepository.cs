@@ -18,6 +18,14 @@ public class DietRepository: BaseRepository, IDietRepository
             ToListAsync();
     }
 
+    public async Task<IEnumerable<Diet>> ListByUserId(long userId)
+    {
+        return await _context.Diets
+            .Where(p => p.UserId == userId)
+            .Include(p => p.Food)
+            .ToListAsync();
+    }
+
     public async Task Add(Diet diet)
     {
         await _context.Diets.AddAsync(diet);

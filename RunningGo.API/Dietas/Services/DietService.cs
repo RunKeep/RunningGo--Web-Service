@@ -26,6 +26,11 @@ public class DietService: IDietService
         return await _dietRepository.List();
     }
 
+    public async Task<IEnumerable<Diet>> ListByUserId(long userId)
+    {
+        return await _dietRepository.ListByUserId(userId);
+    }
+    
     public async Task<DietResponse> Save(Diet model)
     {
         var food = await _foodRepository.FindById(model.FoodId);
@@ -101,4 +106,5 @@ public class DietService: IDietService
             return new DietResponse($"An exception occurred while deleting diet: {e.Message}");
         }
     }
+    
 }
