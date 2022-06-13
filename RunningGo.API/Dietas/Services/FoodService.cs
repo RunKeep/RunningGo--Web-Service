@@ -46,6 +46,10 @@ public class FoodService: IFoodService
         var existingFood = await _foodRepository.FindById(id);
         if (existingFood == null)
             return new FoodResponse("This food isn't registered. Please add it.");
+        
+        var existingFoodWithName = await _foodRepository.FindByName(model.Name);
+        if (existingFoodWithName != null && existingFoodWithName.Id != id)
+            return new FoodResponse($"A food with name {model.Name} already exists.");
 
         existingFood.Name = model.Name;
         existingFood.Calories = model.Calories;
@@ -59,7 +63,7 @@ public class FoodService: IFoodService
         }
         catch (Exception e)
         {
-            return new FoodResponse($"An exception ocurred while updating food: {e.Message}");
+            return new FoodResponse($"An exception occurred while updating food: {e.Message}");
         }
     }
 
@@ -76,7 +80,7 @@ public class FoodService: IFoodService
         }
         catch (Exception e)
         {
-            return new FoodResponse($"An error ocurred while saving food: {e.Message}");
+            return new FoodResponse($"An error ocurred while deleting food: {e.Message}");
         }
     }
 }

@@ -62,7 +62,7 @@ public class UserService: IUserService
         }
         catch (Exception e)
         {
-            return new UserResponse($"An exception ocurred while updating user: {e.Message}");
+            return new UserResponse($"An exception occurred while updating user: {e.Message}");
         }
     }
 
