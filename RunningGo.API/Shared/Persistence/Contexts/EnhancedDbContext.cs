@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using RunningGo.API.Dietas.Domain.Models;
+using RunningGo.API.Rutinas.Domain.Models;
 using RunningGo.API.Shared.Domain.Models;
 using RunningGo.API.Shared.Extensions;
 
@@ -11,8 +12,9 @@ public class EnhancedDbContext : DbContext
     public DbSet<User> Users { get; set; }
     
     public DbSet<Food> Foods { get; set; }
-    
     public DbSet<Diet> Diets { set; get; }
+    
+    public DbSet<Habit> Habits { set; get; }
 
     public EnhancedDbContext(DbContextOptions options) : base(options)
     {
@@ -46,6 +48,11 @@ public class EnhancedDbContext : DbContext
         builder.Entity<Diet>().Property(p => p.Specs).IsRequired().HasMaxLength(200);
         builder.Entity<Diet>().Property(p => p.Duration).IsRequired();
         builder.Entity<Diet>().Property(p => p.Quantity).IsRequired();
+
+        builder.Entity<Habit>().ToTable("habits");
+        builder.Entity<Habit>().HasKey(p => p.Id);
+        builder.Entity<Habit>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<Habit>().Property(p => p.Description).IsRequired().HasMaxLength(250);
 
         //Relationships
         
