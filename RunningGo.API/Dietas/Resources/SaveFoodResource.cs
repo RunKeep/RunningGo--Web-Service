@@ -13,7 +13,4 @@ public class SaveFoodResource
     
     [Required]
     public float Vitamins { set; get; }
-    
-    [Required]
-    public float Quantity { set; get; }
 }

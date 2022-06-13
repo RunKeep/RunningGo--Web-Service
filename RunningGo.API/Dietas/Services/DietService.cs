@@ -60,22 +60,17 @@ public class DietService: IDietService
             return new DietResponse($"Diet with id {id} doesn't exist. Please create it.");
 
         var food = await _foodRepository.FindById(model.FoodId);
-        Console.WriteLine("-------------------------------------------------------------------------------------");
-        Console.WriteLine(model.FoodId);
-        Console.WriteLine("-------------------------------------------------------------------------------------");
         if (food == null)
             return new DietResponse($"Food with id {model.FoodId} doesn't exist. Verify if you have registered that user.");
         
         var user = await _userRepository.FindById(model.UserId);
-        Console.WriteLine("-------------------------------------------------------------------------------------");
-        Console.WriteLine(model.UserId);
-        Console.WriteLine("-------------------------------------------------------------------------------------");
         if (user == null)
-            return new DietResponse($"User with id {model.UserId} doesn't exist. Verify if you have registered that food.");
+            return new DietResponse($"User with id {model.UserId} doesn't exist. Verify if you have registered that user.");
         
         existingDiet.Description = model.Description;
         existingDiet.Specs = model.Specs;
         existingDiet.Duration = model.Duration;
+        existingDiet.Quantity = model.Quantity;
 
         try
         {

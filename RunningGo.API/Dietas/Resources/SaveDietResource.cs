@@ -15,6 +15,9 @@ public class SaveDietResource
     [Required]
     public string Duration { set; get; }
     
+    [Required]
+    public float Quantity { set; get; }
+    
     //Relationships
     [Required]
     public int FoodId { set; get; }

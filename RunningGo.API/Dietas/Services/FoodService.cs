@@ -50,8 +50,7 @@ public class FoodService: IFoodService
         existingFood.Name = model.Name;
         existingFood.Calories = model.Calories;
         existingFood.Vitamins = model.Vitamins;
-        existingFood.Quantity = model.Quantity;
-        
+
         try
         {
             _foodRepository.Update(existingFood);

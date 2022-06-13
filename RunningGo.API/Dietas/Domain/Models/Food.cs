@@ -6,8 +6,7 @@ public class Food
     public string Name { set; get; }
     public float Calories { set; get; }
     public float Vitamins { set; get; }
-    public float Quantity { set; get; }
-    
+
     //Relationships
     
     public IList<Diet> Diets { set; get; } = new List<Diet>();
