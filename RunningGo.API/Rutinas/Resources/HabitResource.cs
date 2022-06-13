@@ -2,5 +2,6 @@
 
 public class HabitResource
 {
-    
+    public int Id { set; get; }
+    public string Description { set; get; }
 }
