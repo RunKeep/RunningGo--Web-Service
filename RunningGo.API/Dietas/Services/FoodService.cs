@@ -22,6 +22,14 @@ public class FoodService: IFoodService
     {
         return await _foodRepository.List();
     }
+    
+    public async Task<FoodResponse> FindById(int id)
+    {
+        var user = await _foodRepository.FindById(id);
+        if (user == null)
+            return new FoodResponse("Food doesn't exist.");
+        return new FoodResponse(user);
+    }
 
     public async Task<FoodResponse> Save(Food model)
     {

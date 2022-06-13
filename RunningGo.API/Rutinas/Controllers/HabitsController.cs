@@ -29,6 +29,21 @@ public class HabitsController: ControllerBase
         return resources;
     }
 
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(int id)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState.GetErrorMessages());
+
+        var result = await _habitService.FindById(id);
+        
+        if (!result.Success)
+            return BadRequest(result.Message);
+
+        var habitResource = _mapper.Map<Habit, HabitResource>(result.Resource);
+        return Ok(habitResource);
+    }
+
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] SaveHabitResource resource)
     {
@@ -44,6 +59,7 @@ public class HabitsController: ControllerBase
         return Created(nameof(Create), habitResource);
     }
 
+    [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, [FromBody] SaveHabitResource resource)
     {
         if (!ModelState.IsValid)
@@ -58,6 +74,7 @@ public class HabitsController: ControllerBase
         return Ok(habitResource);
     }
 
+    [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
         var result = await _habitService.Delete(id);

@@ -28,6 +28,20 @@ public class FoodsController: ControllerBase
         return resources;
     }
 
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(int id)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState.GetErrorMessages());
+
+        var result = await _foodService.FindById(id);
+        if (!result.Success)
+            return BadRequest(result.Message);
+
+        var foodResource = _mapper.Map<Food, FoodResource>(result.Resource);
+        return Ok(foodResource);
+    }
+
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] SaveFoodResource resource)
     {

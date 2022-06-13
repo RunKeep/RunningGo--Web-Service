@@ -32,7 +32,7 @@ public class HabitService: IHabitService
 
     public async Task<HabitResponse> Save(Habit model)
     {
-        var existingHabitWithDescription = _habitRepository.FindByDescription(model.Description);
+        var existingHabitWithDescription = await _habitRepository.FindByDescription(model.Description);
 
         if (existingHabitWithDescription != null)
             return new HabitResponse($"Habit with description already exists.");

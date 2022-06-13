@@ -6,5 +6,5 @@ namespace RunningGo.API.Dietas.Domain.Services;
 
 public interface IFoodService: IBaseService<Food, FoodResponse, int>
 {
-    
+    Task<FoodResponse> FindById(int id);
 }
