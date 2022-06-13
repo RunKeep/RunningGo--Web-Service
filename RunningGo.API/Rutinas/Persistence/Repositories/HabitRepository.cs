@@ -27,6 +27,11 @@ public class HabitRepository: BaseRepository, IHabitRepository
         return await _context.Habits.FindAsync(id);
     }
 
+    public async Task<Habit> FindByDescription(string description)
+    {
+        return await _context.Habits.FirstOrDefaultAsync(p => p.Description == description);
+    }
+
     public void Update(Habit habit)
     {
         _context.Habits.Update(habit);
