@@ -15,6 +15,7 @@ public class EnhancedDbContext : DbContext
     public DbSet<Diet> Diets { set; get; }
     
     public DbSet<Habit> Habits { set; get; }
+    public DbSet<Routine> Routines { set; get; }
 
     public EnhancedDbContext(DbContextOptions options) : base(options)
     {
@@ -54,6 +55,12 @@ public class EnhancedDbContext : DbContext
         builder.Entity<Habit>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
         builder.Entity<Habit>().Property(p => p.Description).IsRequired().HasMaxLength(250);
 
+        builder.Entity<Routine>().ToTable("routines");
+        builder.Entity<Routine>().HasKey(p => p.Id);
+        builder.Entity<Routine>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<Routine>().Property(p => p.Name).IsRequired().HasMaxLength(50);
+        builder.Entity<Routine>().Property(p => p.State).IsRequired().HasMaxLength(60);
+
         //Relationships
         
         builder.Entity<Food>().HasMany(p => p.Diets)
@@ -63,8 +70,14 @@ public class EnhancedDbContext : DbContext
         builder.Entity<User>().HasMany(p => p.Diets)
             .WithOne(p => p.User)
             .HasForeignKey(p => p.UserId);
-        
-        
+
+        builder.Entity<User>().HasMany(p => p.Routines)
+            .WithOne(p => p.User)
+            .HasForeignKey(p => p.UserId);
+
+        builder.Entity<Habit>().HasMany(p => p.Routines)
+            .WithOne(p => p.Habit)
+            .HasForeignKey(p => p.HabitId);
 
         builder.UseSnakeCaseNamingConvention();
     }

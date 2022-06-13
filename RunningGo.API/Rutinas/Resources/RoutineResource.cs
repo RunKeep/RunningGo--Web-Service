@@ -8,5 +8,5 @@ public class RoutineResource
     public string State { set; get; }
     
     public long UserId { set; get; }
-    public int HabitId { set; get; }
+    public HabitResource Habit { set; get; }
 }

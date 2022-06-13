@@ -12,6 +12,7 @@ public class SaveRoutineResource
     public DateTime Date { set; get; }
     
     [Required]
+    [MaxLength(60)]
     public string State { set; get; }
 
     [Required]
