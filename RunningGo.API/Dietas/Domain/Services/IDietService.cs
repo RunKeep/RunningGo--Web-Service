@@ -6,5 +6,5 @@ namespace RunningGo.API.Dietas.Domain.Services;
 
 public interface IDietService: IBaseService<Diet, DietResponse, int>
 {
-    
+    public Task<IEnumerable<Diet>> ListByUserId(long userId);
 }

@@ -9,6 +9,7 @@ public class Diet
     public string Description { set; get; }
     public string Specs { set; get; }
     public string Duration { set; get; }
+    public float Quantity { set; get; }
     
     //Relationships
     

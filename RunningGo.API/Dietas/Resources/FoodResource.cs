@@ -6,5 +6,4 @@ public class FoodResource
     public string Name { set; get; }
     public float Calories { set; get; }
     public float Vitamins { set; get; }
-    public float Quantity { set; get; }
 }

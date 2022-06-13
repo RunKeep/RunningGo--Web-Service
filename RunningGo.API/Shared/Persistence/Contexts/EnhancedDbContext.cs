@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using RunningGo.API.Dietas.Domain.Models;
 using RunningGo.API.Shared.Domain.Models;
 using RunningGo.API.Shared.Extensions;
@@ -37,7 +38,6 @@ public class EnhancedDbContext : DbContext
         builder.Entity<Food>().Property(p => p.Name).IsRequired().HasMaxLength(50);
         builder.Entity<Food>().Property(p => p.Calories).IsRequired();
         builder.Entity<Food>().Property(p => p.Vitamins).IsRequired();
-        builder.Entity<Food>().Property(p => p.Quantity).IsRequired();
 
         builder.Entity<Diet>().ToTable("diets");
         builder.Entity<Diet>().HasKey(p => p.Id);
@@ -45,6 +45,7 @@ public class EnhancedDbContext : DbContext
         builder.Entity<Diet>().Property(p => p.Description).IsRequired().HasMaxLength(200);
         builder.Entity<Diet>().Property(p => p.Specs).IsRequired().HasMaxLength(200);
         builder.Entity<Diet>().Property(p => p.Duration).IsRequired();
+        builder.Entity<Diet>().Property(p => p.Quantity).IsRequired();
 
         //Relationships
         

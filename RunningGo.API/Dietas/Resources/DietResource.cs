@@ -8,6 +8,7 @@ public class DietResource
     public string Description { set; get; }
     public string Specs { set; get; }
     public string Duration { set; get; }
+    public float Quantity { set; get; }
     
     //Relationships
     public FoodResource Food { set; get; }
