@@ -9,10 +9,10 @@ public class Routine
     public DateTime Date { set; get; }
     public string State { set; get; }
     
+    //Relationships
     public long UserId { set; get; }
     public User User { set; get; }
     
-    //Relationships
     public int HabitId { set; get; }
     public Habit Habit { set; get; }
 }
