@@ -28,12 +28,15 @@ public class RoutineRepository: BaseRepository, IRoutineRepository
 
     public async Task<Routine> FindById(long id)
     {
-        return await _context.Routines.FindAsync(id);
+        return await _context.Routines
+            .Include(p => p.Habit)
+            .FirstOrDefaultAsync(p => p.Id == id);
     }
 
     public async Task<Routine> FindByName(string name)
     {
-        return await _context.Routines.FirstOrDefaultAsync(p => p.Name == name);
+        return await _context.Routines.Include(p => p.Habit)
+            .FirstOrDefaultAsync(p => p.Name == name);
     }
 
     public async Task Add(Routine routine)

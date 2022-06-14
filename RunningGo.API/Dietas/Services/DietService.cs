@@ -61,7 +61,7 @@ public class DietService: IDietService
 
         var food = await _foodRepository.FindById(model.FoodId);
         if (food == null)
-            return new DietResponse($"Food with id {model.FoodId} doesn't exist. Verify if you have registered that user.");
+            return new DietResponse($"Food with id {model.FoodId} doesn't exist. Verify if you have registered that food.");
         
         var user = await _userRepository.FindById(model.UserId);
         if (user == null)

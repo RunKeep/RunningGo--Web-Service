@@ -41,7 +41,7 @@ public class RoutineService: IRoutineService
         if (user == null)
             return new RoutineResponse($"User with id {model.UserId} doesn't exist. Verify if you have registered that user.");
 
-        var existingRoutineWithName = _routineRepository.FindByName(model.Name);
+        var existingRoutineWithName = await _routineRepository.FindByName(model.Name);
         if (existingRoutineWithName != null)
             return new RoutineResponse($"Routine with name {model.Name} already exists.");
         
@@ -71,7 +71,7 @@ public class RoutineService: IRoutineService
         if (user == null)
             return new RoutineResponse($"User with id {model.UserId} doesn't exist. Verify if you have registered that user.");
         
-        var existingRoutineWithName = _routineRepository.FindByName(model.Name);
+        var existingRoutineWithName = await _routineRepository.FindByName(model.Name);
         if (existingRoutineWithName != null  && existingRoutineWithName.Id != id)
             return new RoutineResponse($"Routine with name {model.Name} already exists.");
 
@@ -83,11 +83,11 @@ public class RoutineService: IRoutineService
         {
             _routineRepository.Update(existingRoutine);
             await _unitOfWork.Complete();
-            return new RoutineResponse(model);
+            return new RoutineResponse(existingRoutine);
         }
         catch (Exception e)
         {
-            return new RoutineResponse($"An exception occurred while saving routine: {e.Message}");
+            return new RoutineResponse($"An exception occurred while updating routine: {e.Message}");
         }
 
     }

@@ -41,6 +41,8 @@ builder.Services.AddScoped<IDietService, DietService>();
 
 builder.Services.AddScoped<IHabitRepository, HabitRepository>();
 builder.Services.AddScoped<IHabitService, HabitService>();
+builder.Services.AddScoped<IRoutineRepository, RoutineRepository>();
+builder.Services.AddScoped<IRoutineService, RoutineService>();
 
 builder.Services.AddAutoMapper(typeof(ModelToResourceProfile),
     typeof(ResourceToModelProfile));

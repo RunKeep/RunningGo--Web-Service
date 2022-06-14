@@ -56,7 +56,7 @@ public class HabitService: IHabitService
         if (existingHabit == null)
             return new HabitResponse("This habit isn't registered. Please add it.");
         
-        var existingHabitWithDescription = _habitRepository.FindByDescription(model.Description);
+        var existingHabitWithDescription = await _habitRepository.FindByDescription(model.Description);
 
         if (existingHabitWithDescription != null && existingHabitWithDescription.Id != id)
             return new HabitResponse($"Habit with description already exists.");

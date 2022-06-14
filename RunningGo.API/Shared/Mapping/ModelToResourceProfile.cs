@@ -18,5 +18,6 @@ public class ModelToResourceProfile: Profile
         CreateMap<Diet, DietResource>();
 
         CreateMap<Habit, HabitResource>();
+        CreateMap<Routine, RoutineResource>();
     }
 }

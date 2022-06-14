@@ -33,7 +33,8 @@ public class DietRepository: BaseRepository, IDietRepository
 
     public async Task<Diet> FindById(int id)
     {
-        return await _context.Diets.FindAsync(id);
+        return await _context.Diets.Include(p => p.Food)
+            .FirstOrDefaultAsync(p => p.Id == id);
     }
 
     public void Update(Diet diet)
