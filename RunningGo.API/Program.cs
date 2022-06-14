@@ -3,6 +3,10 @@ using RunningGo.API.Dietas.Domain.Repositories;
 using RunningGo.API.Dietas.Domain.Services;
 using RunningGo.API.Dietas.Persistence.Repositories;
 using RunningGo.API.Dietas.Services;
+using RunningGo.API.Rutinas.Domain.Repositories;
+using RunningGo.API.Rutinas.Domain.Services;
+using RunningGo.API.Rutinas.Persistence.Repositories;
+using RunningGo.API.Rutinas.Services;
 using RunningGo.API.Shared.Domain.Repositories;
 using RunningGo.API.Shared.Domain.Services;
 using RunningGo.API.Shared.Mapping;
@@ -34,6 +38,11 @@ builder.Services.AddScoped<IFoodRepository, FoodRepository>();
 builder.Services.AddScoped<IFoodService, FoodService>();
 builder.Services.AddScoped<IDietRepository, DietRepository>();
 builder.Services.AddScoped<IDietService, DietService>();
+
+builder.Services.AddScoped<IHabitRepository, HabitRepository>();
+builder.Services.AddScoped<IHabitService, HabitService>();
+builder.Services.AddScoped<IRoutineRepository, RoutineRepository>();
+builder.Services.AddScoped<IRoutineService, RoutineService>();
 
 builder.Services.AddAutoMapper(typeof(ModelToResourceProfile),
     typeof(ResourceToModelProfile));

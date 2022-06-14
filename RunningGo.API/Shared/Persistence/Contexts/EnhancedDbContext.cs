@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using RunningGo.API.Dietas.Domain.Models;
+using RunningGo.API.Rutinas.Domain.Models;
 using RunningGo.API.Shared.Domain.Models;
 using RunningGo.API.Shared.Extensions;
 
@@ -11,8 +12,10 @@ public class EnhancedDbContext : DbContext
     public DbSet<User> Users { get; set; }
     
     public DbSet<Food> Foods { get; set; }
-    
     public DbSet<Diet> Diets { set; get; }
+    
+    public DbSet<Habit> Habits { set; get; }
+    public DbSet<Routine> Routines { set; get; }
 
     public EnhancedDbContext(DbContextOptions options) : base(options)
     {
@@ -47,6 +50,17 @@ public class EnhancedDbContext : DbContext
         builder.Entity<Diet>().Property(p => p.Duration).IsRequired();
         builder.Entity<Diet>().Property(p => p.Quantity).IsRequired();
 
+        builder.Entity<Habit>().ToTable("habits");
+        builder.Entity<Habit>().HasKey(p => p.Id);
+        builder.Entity<Habit>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<Habit>().Property(p => p.Description).IsRequired().HasMaxLength(250);
+
+        builder.Entity<Routine>().ToTable("routines");
+        builder.Entity<Routine>().HasKey(p => p.Id);
+        builder.Entity<Routine>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<Routine>().Property(p => p.Name).IsRequired().HasMaxLength(50);
+        builder.Entity<Routine>().Property(p => p.State).IsRequired().HasMaxLength(60);
+
         //Relationships
         
         builder.Entity<Food>().HasMany(p => p.Diets)
@@ -56,8 +70,14 @@ public class EnhancedDbContext : DbContext
         builder.Entity<User>().HasMany(p => p.Diets)
             .WithOne(p => p.User)
             .HasForeignKey(p => p.UserId);
-        
-        
+
+        builder.Entity<User>().HasMany(p => p.Routines)
+            .WithOne(p => p.User)
+            .HasForeignKey(p => p.UserId);
+
+        builder.Entity<Habit>().HasMany(p => p.Routines)
+            .WithOne(p => p.Habit)
+            .HasForeignKey(p => p.HabitId);
 
         builder.UseSnakeCaseNamingConvention();
     }

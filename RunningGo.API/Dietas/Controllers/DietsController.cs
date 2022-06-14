@@ -8,7 +8,7 @@ using RunningGo.API.Shared.Extensions;
 namespace RunningGo.API.Dietas.Controllers;
 
 [ApiController]
-[Route("/api/v1/diets")]
+[Route("/api/v1/[controller]")]
 public class DietsController : ControllerBase
 {
     private readonly IDietService _dietService;
@@ -37,8 +37,8 @@ public class DietsController : ControllerBase
         var result = await _dietService.Save(diet);
         if (!result.Success)
             return BadRequest(result.Message);
-        var foodResource = _mapper.Map<Diet, DietResource>(result.Resource);
-        return Created(nameof(Create), foodResource);
+        var dietResource = _mapper.Map<Diet, DietResource>(result.Resource);
+        return Created(nameof(Create), dietResource);
     }
 
     [HttpPut("{id}")]

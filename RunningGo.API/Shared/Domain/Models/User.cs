@@ -1,4 +1,5 @@
 ﻿using RunningGo.API.Dietas.Domain.Models;
+using RunningGo.API.Rutinas.Domain.Models;
 
 namespace RunningGo.API.Shared.Domain.Models;
 
@@ -15,4 +16,5 @@ public class User
     
     //Relationships
     public IList<Diet> Diets { set; get; } = new List<Diet>();
+    public IList<Routine> Routines { set; get; } = new List<Routine>();
 }
