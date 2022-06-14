@@ -39,6 +39,12 @@ public class RoutineRepository: BaseRepository, IRoutineRepository
             .FirstOrDefaultAsync(p => p.Name == name);
     }
 
+    public async Task<Routine> FindByNameAndUserId(string name, long userId)
+    {
+        return await _context.Routines.Include(p => p.Habit)
+            .FirstOrDefaultAsync(p => p.Name == name && p.UserId == userId);
+    }
+
     public async Task Add(Routine routine)
     {
         await _context.Routines.AddAsync(routine);
