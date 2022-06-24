@@ -4,6 +4,7 @@ using RunningGo.API.Dietas.Domain.Models;
 using RunningGo.API.Rutinas.Domain.Models;
 using RunningGo.API.Shared.Domain.Models;
 using RunningGo.API.Shared.Extensions;
+using RunningGo.API.SistemaDeMetas.Domain.Models;
 
 namespace RunningGo.API.Shared.Persistence.Contexts;
 
@@ -16,6 +17,8 @@ public class EnhancedDbContext : DbContext
     
     public DbSet<Habit> Habits { set; get; }
     public DbSet<Routine> Routines { set; get; }
+    
+    public DbSet<Goal> Goals { set; get; }
 
     public EnhancedDbContext(DbContextOptions options) : base(options)
     {
@@ -60,6 +63,12 @@ public class EnhancedDbContext : DbContext
         builder.Entity<Routine>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
         builder.Entity<Routine>().Property(p => p.Name).IsRequired().HasMaxLength(50);
         builder.Entity<Routine>().Property(p => p.State).IsRequired().HasMaxLength(60);
+
+        builder.Entity<Goal>().ToTable("goals");
+        builder.Entity<Goal>().HasKey(p => p.Id);
+        builder.Entity<Goal>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<Goal>().Property(p => p.Description).IsRequired().HasMaxLength(100);
+        builder.Entity<Goal>().Property(p => p.Quantity).IsRequired();
 
         //Relationships
         
