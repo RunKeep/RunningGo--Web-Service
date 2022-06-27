@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using RunningGo.API.Checkeos.Domain.Models;
 using RunningGo.API.Dietas.Domain.Models;
 using RunningGo.API.Rutinas.Domain.Models;
 using RunningGo.API.Shared.Domain.Models;
@@ -19,8 +20,9 @@ public class EnhancedDbContext : DbContext
     public DbSet<Routine> Routines { set; get; }
     
     public DbSet<Goal> Goals { set; get; }
-    
     public DbSet<Process> Processes { set; get; }
+    
+    public DbSet<Specialist> Specialists { set; get; }
 
     public EnhancedDbContext(DbContextOptions options) : base(options)
     {
@@ -78,6 +80,12 @@ public class EnhancedDbContext : DbContext
         builder.Entity<Goal>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
         builder.Entity<Goal>().Property(p => p.Description).IsRequired().HasMaxLength(100);
         builder.Entity<Goal>().Property(p => p.Quantity).IsRequired();
+
+        builder.Entity<Specialist>().ToTable("specialists");
+        builder.Entity<Specialist>().HasKey(p => p.Id);
+        builder.Entity<Specialist>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<Specialist>().Property(p => p.Name).IsRequired().HasMaxLength(50);
+        builder.Entity<Specialist>().Property(p => p.Degree).IsRequired().HasMaxLength(50);
 
         //Relationships
         
