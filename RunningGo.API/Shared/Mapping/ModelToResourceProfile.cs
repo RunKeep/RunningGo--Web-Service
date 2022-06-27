@@ -5,6 +5,8 @@ using RunningGo.API.Rutinas.Domain.Models;
 using RunningGo.API.Rutinas.Resources;
 using RunningGo.API.Shared.Domain.Models;
 using RunningGo.API.Shared.Resources;
+using RunningGo.API.SistemaDeMetas.Domain.Models;
+using RunningGo.API.SistemaDeMetas.Resources;
 
 namespace RunningGo.API.Shared.Mapping;
 
@@ -19,5 +21,8 @@ public class ModelToResourceProfile: Profile
 
         CreateMap<Habit, HabitResource>();
         CreateMap<Routine, RoutineResource>();
+
+        CreateMap<Goal, GoalResource>();
+        CreateMap<Process, ProcessResource>();
     }
 }
