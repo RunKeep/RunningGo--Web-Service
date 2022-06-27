@@ -13,6 +13,10 @@ using RunningGo.API.Shared.Mapping;
 using RunningGo.API.Shared.Persistence.Contexts;
 using RunningGo.API.Shared.Persistence.Repositories;
 using RunningGo.API.Shared.Services;
+using RunningGo.API.SistemaDeMetas.Domain.Repositories;
+using RunningGo.API.SistemaDeMetas.Domain.Services;
+using RunningGo.API.SistemaDeMetas.Persistence.Repositories;
+using RunningGo.API.SistemaDeMetas.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,6 +47,9 @@ builder.Services.AddScoped<IHabitRepository, HabitRepository>();
 builder.Services.AddScoped<IHabitService, HabitService>();
 builder.Services.AddScoped<IRoutineRepository, RoutineRepository>();
 builder.Services.AddScoped<IRoutineService, RoutineService>();
+
+builder.Services.AddScoped<IGoalRepository, GoalRepository>();
+builder.Services.AddScoped<IGoalService, GoalService>();
 
 builder.Services.AddAutoMapper(typeof(ModelToResourceProfile),
     typeof(ResourceToModelProfile));
