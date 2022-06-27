@@ -7,5 +7,5 @@ namespace RunningGo.API.SistemaDeMetas.Domain.Services;
 public interface IProcessService: IBaseService<Process, ProcessResponse, int>
 {
     Task<ProcessResponse> FindById(int id);
-    Task<IEnumerable<Process>> ListByUserId(int userId);
+    Task<IEnumerable<Process>> ListByUserId(long userId);
 }

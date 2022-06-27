@@ -48,9 +48,9 @@ public class ProcessService: IProcessService
 
     public async Task<ProcessResponse> Update(int id, Process model)
     {
-        var existingProcess = await _processRepository.FindById(model.Id);
+        var existingProcess = await _processRepository.FindById(id);
         if (existingProcess == null)
-            return new ProcessResponse($"Process with id {model.Id} doesn't exist.");
+            return new ProcessResponse($"Process doesn't exist. Please create it.");
         
 
         var existingProcessWithDescription = await _processRepository.FindByDescription(model.Description);
@@ -99,7 +99,7 @@ public class ProcessService: IProcessService
         return new ProcessResponse(process);
     }
 
-    public async Task<IEnumerable<Process>> ListByUserId(int userId)
+    public async Task<IEnumerable<Process>> ListByUserId(long userId)
     {
         return await _processRepository.ListByUserId(userId);
     }

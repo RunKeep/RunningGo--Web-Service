@@ -10,7 +10,7 @@ public class Process
     public DateTime Date { set; get; }
     
     //Relationships
-    public int UserId { set; get; }
+    public long UserId { set; get; }
     public User User { set; get; }
 
     public IList<Goal> Goals { set; get; } = new List<Goal>();

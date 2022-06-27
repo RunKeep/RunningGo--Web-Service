@@ -101,6 +101,10 @@ public class EnhancedDbContext : DbContext
             .WithOne(p => p.Process)
             .HasForeignKey(p => p.ProcessId);
 
+        builder.Entity<User>().HasMany(p => p.Processes)
+            .WithOne(p => p.User)
+            .HasForeignKey(p => p.UserId);
+
         builder.UseSnakeCaseNamingConvention();
     }
 }

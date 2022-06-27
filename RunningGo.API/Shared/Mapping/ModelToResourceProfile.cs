@@ -23,5 +23,6 @@ public class ModelToResourceProfile: Profile
         CreateMap<Routine, RoutineResource>();
 
         CreateMap<Goal, GoalResource>();
+        CreateMap<Process, ProcessResource>();
     }
 }

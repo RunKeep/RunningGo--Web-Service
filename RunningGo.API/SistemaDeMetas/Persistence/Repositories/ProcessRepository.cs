@@ -29,7 +29,7 @@ public class ProcessRepository: BaseRepository, IProcessRepository
         return await _context.Processes.FirstOrDefaultAsync(p => p.Description == description);
     }
 
-    public async Task<IEnumerable<Process>> ListByUserId(int userId)
+    public async Task<IEnumerable<Process>> ListByUserId(long userId)
     {
         return await _context.Processes.Where(p => p.UserId == userId)
             .Include(p => p.Goals)

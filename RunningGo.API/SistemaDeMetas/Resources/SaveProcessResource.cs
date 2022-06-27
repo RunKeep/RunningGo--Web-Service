@@ -17,5 +17,5 @@ public class SaveProcessResource
     
     //Relationships
     [Required]
-    public int UserId { set; get; }
+    public long UserId { set; get; }
 }
