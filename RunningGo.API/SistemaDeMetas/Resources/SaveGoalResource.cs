@@ -10,4 +10,11 @@ public class SaveGoalResource
     
     [Required]
     public int Quantity { set; get; }
+    
+    [Required]
+    public bool End { set; get; }
+    
+    //Relationships
+    [Required]
+    public int ProcessId { set; get; }
 }

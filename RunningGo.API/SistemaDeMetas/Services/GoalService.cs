@@ -25,7 +25,7 @@ public class GoalService: IGoalService
     public async Task<GoalResponse> Save(Goal model)
     {
         var existingGoalWithName = await _goalRepository.FindByDescription(model.Description);
-        if (existingGoalWithName != null)
+        if (existingGoalWithName != null && existingGoalWithName.ProcessId == model.ProcessId)
             return new GoalResponse($"A goal with description {model.Description} already exists.");
         try
         {
@@ -46,11 +46,12 @@ public class GoalService: IGoalService
             return new GoalResponse("Goal doesn't exist. Please create it.");
         
         var existingGoalWithName = await _goalRepository.FindByDescription(model.Description);
-        if (existingGoalWithName != null && existingGoalWithName.Id != id)
+        if (existingGoalWithName != null && existingGoalWithName.Id != id && existingGoalWithName.ProcessId == existingGoal.ProcessId)
             return new GoalResponse($"A goal with description {model.Description} already exists.");
 
         existingGoal.Description = model.Description;
         existingGoal.Quantity = model.Quantity;
+        existingGoal.End = model.End;
 
         try
         {

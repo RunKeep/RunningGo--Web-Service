@@ -19,6 +19,8 @@ public class EnhancedDbContext : DbContext
     public DbSet<Routine> Routines { set; get; }
     
     public DbSet<Goal> Goals { set; get; }
+    
+    public DbSet<Process> Processes { set; get; }
 
     public EnhancedDbContext(DbContextOptions options) : base(options)
     {
@@ -64,6 +66,12 @@ public class EnhancedDbContext : DbContext
         builder.Entity<Routine>().Property(p => p.Name).IsRequired().HasMaxLength(50);
         builder.Entity<Routine>().Property(p => p.State).IsRequired().HasMaxLength(60);
 
+        builder.Entity<Process>().ToTable("processes");
+        builder.Entity<Process>().HasKey(p => p.Id);
+        builder.Entity<Process>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<Process>().Property(p => p.State).IsRequired().HasMaxLength(50);
+        builder.Entity<Process>().Property(p => p.Date).IsRequired();
+
         builder.Entity<Goal>().ToTable("goals");
         builder.Entity<Goal>().HasKey(p => p.Id);
         builder.Entity<Goal>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
@@ -87,6 +95,10 @@ public class EnhancedDbContext : DbContext
         builder.Entity<Habit>().HasMany(p => p.Routines)
             .WithOne(p => p.Habit)
             .HasForeignKey(p => p.HabitId);
+
+        builder.Entity<Process>().HasMany(p => p.Goals)
+            .WithOne(p => p.Process)
+            .HasForeignKey(p => p.ProcessId);
 
         builder.UseSnakeCaseNamingConvention();
     }
