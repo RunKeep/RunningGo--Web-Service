@@ -9,12 +9,14 @@ namespace RunningGo.API.SistemaDeMetas.Services;
 public class GoalService: IGoalService
 {
     private readonly IGoalRepository _goalRepository;
+    private readonly IProcessRepository _processRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public GoalService(IGoalRepository goalRepository, IUnitOfWork unitOfWork)
+    public GoalService(IGoalRepository goalRepository, IUnitOfWork unitOfWork, IProcessRepository processRepository)
     {
         _goalRepository = goalRepository;
         _unitOfWork = unitOfWork;
+        _processRepository = processRepository;
     }
 
     public async Task<IEnumerable<Goal>> List()
@@ -24,8 +26,12 @@ public class GoalService: IGoalService
 
     public async Task<GoalResponse> Save(Goal model)
     {
-        var existingGoalWithName = await _goalRepository.FindByDescription(model.Description);
-        if (existingGoalWithName != null && existingGoalWithName.ProcessId == model.ProcessId)
+        var existingProcess = await _processRepository.FindById(model.ProcessId);
+        if (existingProcess == null)
+            return new GoalResponse($"Process with id {model.ProcessId} doesn't exist.");
+        
+        var existingGoalWithDescription = await _goalRepository.FindByDescription(model.Description);
+        if (existingGoalWithDescription != null && existingGoalWithDescription.ProcessId == model.ProcessId)
             return new GoalResponse($"A goal with description {model.Description} already exists.");
         try
         {
@@ -45,8 +51,12 @@ public class GoalService: IGoalService
         if (existingGoal == null)
             return new GoalResponse("Goal doesn't exist. Please create it.");
         
-        var existingGoalWithName = await _goalRepository.FindByDescription(model.Description);
-        if (existingGoalWithName != null && existingGoalWithName.Id != id && existingGoalWithName.ProcessId == existingGoal.ProcessId)
+        var existingProcess = await _processRepository.FindById(model.ProcessId);
+        if (existingProcess == null)
+            return new GoalResponse($"Process with id {model.ProcessId} doesn't exist.");
+        
+        var existingGoalWithDescription = await _goalRepository.FindByDescription(model.Description);
+        if (existingGoalWithDescription != null && existingGoalWithDescription.Id != id && existingGoalWithDescription.ProcessId == existingGoal.ProcessId)
             return new GoalResponse($"A goal with description {model.Description} already exists.");
 
         existingGoal.Description = model.Description;

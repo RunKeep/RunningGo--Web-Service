@@ -6,6 +6,10 @@ public class SaveProcessResource
 {
     [Required]
     [MaxLength(50)]
+    public string Description { set; get; }
+    
+    [Required]
+    [MaxLength(50)]
     public string State { set; get; }
     
     [Required]

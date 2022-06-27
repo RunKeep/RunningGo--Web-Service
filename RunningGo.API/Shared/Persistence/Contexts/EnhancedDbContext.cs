@@ -68,6 +68,7 @@ public class EnhancedDbContext : DbContext
 
         builder.Entity<Process>().ToTable("processes");
         builder.Entity<Process>().HasKey(p => p.Id);
+        builder.Entity<Process>().Property(p => p.Description).IsRequired().HasMaxLength(50);
         builder.Entity<Process>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
         builder.Entity<Process>().Property(p => p.State).IsRequired().HasMaxLength(50);
         builder.Entity<Process>().Property(p => p.Date).IsRequired();
