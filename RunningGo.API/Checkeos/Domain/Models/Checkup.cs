@@ -15,4 +15,7 @@ public class Checkup
     
     public long SpecialistId { set; get; }
     public Specialist Specialist { set; get; }
+    
+    public int ArrangeId { set; get; }
+    public Arrange Arrange { set; get; }
 }

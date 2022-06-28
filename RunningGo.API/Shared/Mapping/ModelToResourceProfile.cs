@@ -29,5 +29,6 @@ public class ModelToResourceProfile: Profile
 
         CreateMap<Specialist, SpecialistResource>();
         CreateMap<Checkup, CheckupResource>();
+        CreateMap<Arrange, ArrangeResource>();
     }
 }

@@ -24,6 +24,7 @@ public class EnhancedDbContext : DbContext
     
     public DbSet<Specialist> Specialists { set; get; }
     public DbSet<Checkup> Checkups { set; get; }
+    public DbSet<Arrange> Arranges { set; get; }
 
     public EnhancedDbContext(DbContextOptions options) : base(options)
     {
@@ -95,6 +96,11 @@ public class EnhancedDbContext : DbContext
         builder.Entity<Checkup>().Property(p => p.UserData).IsRequired().HasMaxLength(250);
         builder.Entity<Checkup>().Property(p => p.Results).IsRequired().HasMaxLength(250);
 
+        builder.Entity<Arrange>().ToTable("arranges");
+        builder.Entity<Arrange>().HasKey(p => p.Id);
+        builder.Entity<Arrange>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<Arrange>().Property(p => p.State).IsRequired().HasMaxLength(10);
+        
         //Relationships
         
         builder.Entity<Food>().HasMany(p => p.Diets)
@@ -128,6 +134,10 @@ public class EnhancedDbContext : DbContext
         builder.Entity<Specialist>().HasMany(p => p.Checkups)
             .WithOne(p => p.Specialist)
             .HasForeignKey(p => p.SpecialistId);
+
+        builder.Entity<Arrange>().HasOne(p => p.Checkup)
+            .WithOne(p => p.Arrange)
+            .HasForeignKey("ArrangeId");
 
         builder.UseSnakeCaseNamingConvention();
     }

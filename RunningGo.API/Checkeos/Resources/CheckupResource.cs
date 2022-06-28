@@ -9,5 +9,6 @@ public class CheckupResource
     
     //Relationships
     public long UserId { set; get; }
-    public long SpecialistId { set; get; }
+    public SpecialistResource Specialist { set; get; }
+    public ArrangeResource Arrange { set; get; }
 }

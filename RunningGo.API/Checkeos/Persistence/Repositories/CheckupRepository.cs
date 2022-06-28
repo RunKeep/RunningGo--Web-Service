@@ -14,22 +14,34 @@ public class CheckupRepository: BaseRepository, ICheckupRepository
 
     public async Task<IEnumerable<Checkup>> List()
     {
-        return await _context.Checkups.ToListAsync();
+        return await _context.Checkups
+            .Include(p => p.Specialist)
+            .Include(p => p.Arrange)
+            .ToListAsync();
     }
 
     public async Task<IEnumerable<Checkup>> ListByUserId(long userId)
     {
-        return await _context.Checkups.Where(p => p.UserId == userId).ToListAsync();
+        return await _context.Checkups.Where(p => p.UserId == userId)
+            .Include(p => p.Specialist)
+            .Include(p => p.Arrange)
+            .ToListAsync();
     }
 
     public async Task<IEnumerable<Checkup>> ListBySpecialistId(long specialistId)
     {
-        return await _context.Checkups.Where(p => p.SpecialistId == specialistId).ToListAsync();
+        return await _context.Checkups.Where(p => p.SpecialistId == specialistId)
+            .Include(p => p.Specialist)
+            .Include(p => p.Arrange)
+            .ToListAsync();
     }
 
     public async Task<Checkup> FindById(int id)
     {
-        return await _context.Checkups.FirstOrDefaultAsync(p => p.Id == id);
+        return await _context.Checkups
+            .Include(p => p.Specialist)
+            .Include(p => p.Arrange)
+            .FirstOrDefaultAsync(p => p.Id == id);
     }
 
     public async Task Add(Checkup checkup)
