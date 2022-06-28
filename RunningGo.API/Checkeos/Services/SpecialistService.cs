@@ -9,7 +9,7 @@ namespace RunningGo.API.Checkeos.Services;
 public class SpecialistService: ISpecialistService
 {
     private readonly ISpecialistRepository _specialistRepository;
-    private IUnitOfWork _unitOfWork;
+    private readonly IUnitOfWork _unitOfWork;
 
     public SpecialistService(ISpecialistRepository specialistRepository, IUnitOfWork unitOfWork)
     {

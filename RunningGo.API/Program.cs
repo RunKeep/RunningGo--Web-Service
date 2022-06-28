@@ -1,4 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using RunningGo.API.Checkeos.Domain.Repositories;
+using RunningGo.API.Checkeos.Domain.Services;
+using RunningGo.API.Checkeos.Persistence.Repositories;
+using RunningGo.API.Checkeos.Services;
 using RunningGo.API.Dietas.Domain.Repositories;
 using RunningGo.API.Dietas.Domain.Services;
 using RunningGo.API.Dietas.Persistence.Repositories;
@@ -52,6 +56,9 @@ builder.Services.AddScoped<IGoalRepository, GoalRepository>();
 builder.Services.AddScoped<IGoalService, GoalService>();
 builder.Services.AddScoped<IProcessRepository, ProcessRepository>();
 builder.Services.AddScoped<IProcessService, ProcessService>();
+
+builder.Services.AddScoped<ISpecialistRepository, SpecialistRepository>();
+builder.Services.AddScoped<ISpecialistService, SpecialistService>();
 
 builder.Services.AddAutoMapper(typeof(ModelToResourceProfile),
     typeof(ResourceToModelProfile));
