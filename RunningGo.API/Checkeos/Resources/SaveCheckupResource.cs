@@ -21,5 +21,6 @@ public class SaveCheckupResource
     [Required]
     public long SpecialistId { set; get; }
     
-    
+    [Required]
+    public int ArrangeId { set; get; }
 }
