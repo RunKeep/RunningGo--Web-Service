@@ -59,6 +59,8 @@ builder.Services.AddScoped<IProcessService, ProcessService>();
 
 builder.Services.AddScoped<ISpecialistRepository, SpecialistRepository>();
 builder.Services.AddScoped<ISpecialistService, SpecialistService>();
+builder.Services.AddScoped<ICheckupRepository, CheckupRepository>();
+builder.Services.AddScoped<ICheckupService, CheckupService>();
 
 builder.Services.AddAutoMapper(typeof(ModelToResourceProfile),
     typeof(ResourceToModelProfile));

@@ -28,5 +28,6 @@ public class ResourceToModelProfile: Profile
         CreateMap<SaveProcessResource, Process>();
 
         CreateMap<SaveSpecialistResource, Specialist>();
+        CreateMap<SaveCheckupResource, Checkup>();
     }
 }
