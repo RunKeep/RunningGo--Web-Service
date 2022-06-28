@@ -136,8 +136,7 @@ public class EnhancedDbContext : DbContext
             .HasForeignKey(p => p.SpecialistId);
 
         builder.Entity<Arrange>().HasOne(p => p.Checkup)
-            .WithOne(p => p.Arrange)
-            .HasForeignKey("ArrangeId");
+            .WithOne(p => p.Arrange);
 
         builder.UseSnakeCaseNamingConvention();
     }

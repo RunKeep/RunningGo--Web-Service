@@ -61,6 +61,8 @@ builder.Services.AddScoped<ISpecialistRepository, SpecialistRepository>();
 builder.Services.AddScoped<ISpecialistService, SpecialistService>();
 builder.Services.AddScoped<ICheckupRepository, CheckupRepository>();
 builder.Services.AddScoped<ICheckupService, CheckupService>();
+builder.Services.AddScoped<IArrangeRepository, ArrangeRepository>();
+builder.Services.AddScoped<IArrangeService, ArrangeService>();
 
 builder.Services.AddAutoMapper(typeof(ModelToResourceProfile),
     typeof(ResourceToModelProfile));
@@ -74,11 +76,14 @@ using (var context = scope.ServiceProvider.GetService<EnhancedDbContext>())
 }
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+/*if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+}*/
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 

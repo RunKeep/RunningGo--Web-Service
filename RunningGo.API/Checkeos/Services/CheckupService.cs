@@ -11,14 +11,16 @@ public class CheckupService: ICheckupService
     private readonly ICheckupRepository _checkupRepository;
     private readonly IUserRepository _userRepository;
     private readonly ISpecialistRepository _specialistRepository;
+    private readonly IArrangeRepository _arrangeRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public CheckupService(ICheckupRepository checkupRepository, IUserRepository userRepository, ISpecialistRepository specialistRepository, IUnitOfWork unitOfWork)
+    public CheckupService(ICheckupRepository checkupRepository, IUserRepository userRepository, ISpecialistRepository specialistRepository, IUnitOfWork unitOfWork, IArrangeRepository arrangeRepository)
     {
         _checkupRepository = checkupRepository;
         _userRepository = userRepository;
         _specialistRepository = specialistRepository;
         _unitOfWork = unitOfWork;
+        _arrangeRepository = arrangeRepository;
     }
 
     public async Task<IEnumerable<Checkup>> List()
@@ -28,10 +30,18 @@ public class CheckupService: ICheckupService
 
     public async Task<CheckupResponse> Save(Checkup model)
     {
+        var existingArrange = await _arrangeRepository.FindById(model.ArrangeId);
+        if (existingArrange == null)
+            return new CheckupResponse($"Arrange with id {model.ArrangeId} doesn't exist");
+
+        var existingCheckupWithArrange = await _checkupRepository.FindByArrangeId(model.ArrangeId);
+        if (existingCheckupWithArrange != null)
+            return new CheckupResponse($"Arrange with id {model.ArrangeId} is used by other checkup.");
+        
         var existingUser = await _userRepository.FindById(model.UserId);
         if (existingUser == null)
             return new CheckupResponse($"User with id {model.UserId} doesn't exist");
-
+        
         var existingSpecialist = await _specialistRepository.FindById(model.SpecialistId);
         if (existingSpecialist == null)
             return new CheckupResponse($"Specialist with id {model.SpecialistId} doesn't exist");
@@ -54,6 +64,14 @@ public class CheckupService: ICheckupService
         if (existingCheckup == null)
             return new CheckupResponse("Checkup doesn't exist. Please create it.");
         
+        var existingArrange = await _arrangeRepository.FindById(model.ArrangeId);
+        if (existingArrange == null)
+            return new CheckupResponse($"Arrange with id {model.ArrangeId} doesn't exist");
+        
+        var existingCheckupWithArrange = await _checkupRepository.FindByArrangeId(model.ArrangeId);
+        if (existingCheckupWithArrange != null)
+            return new CheckupResponse($"Arrange with id {model.ArrangeId} is used by other checkup.");
+
         var existingUser = await _userRepository.FindById(model.UserId);
         if (existingUser == null)
             return new CheckupResponse($"User with id {model.UserId} doesn't exist");

@@ -44,6 +44,14 @@ public class CheckupRepository: BaseRepository, ICheckupRepository
             .FirstOrDefaultAsync(p => p.Id == id);
     }
 
+    public async Task<Checkup> FindByArrangeId(int arrangeId)
+    {
+        return await _context.Checkups
+            .Include(p => p.Specialist)
+            .Include(p => p.Arrange)
+            .FirstOrDefaultAsync(p => p.ArrangeId == arrangeId);
+    }
+
     public async Task Add(Checkup checkup)
     {
         await _context.Checkups.AddAsync(checkup);
