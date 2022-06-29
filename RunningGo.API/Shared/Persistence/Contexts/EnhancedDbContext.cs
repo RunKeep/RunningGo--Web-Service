@@ -40,6 +40,8 @@ public class EnhancedDbContext : DbContext
         builder.Entity<User>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
         builder.Entity<User>().Property(p => p.Name).IsRequired().HasMaxLength(30);
         builder.Entity<User>().Property(p => p.LastName).IsRequired().HasMaxLength(30);
+        builder.Entity<User>().Property(p => p.Email).IsRequired().HasMaxLength(100);
+        builder.Entity<User>().Property(p => p.Password).IsRequired();
         builder.Entity<User>().Property(p => p.Age).IsRequired();
         builder.Entity<User>().Property(p => p.Height).IsRequired();
         builder.Entity<User>().Property(p => p.Weight).IsRequired();

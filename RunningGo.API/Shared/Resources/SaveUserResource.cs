@@ -13,6 +13,13 @@ public class SaveUserResource
     public string LastName { set; get; }
     
     [Required]
+    [MaxLength(100)]
+    public string Email { set; get; }
+    
+    [Required]
+    public string Password { set; get; }
+
+    [Required]
     public short Age { set; get; }
     
     [Required]

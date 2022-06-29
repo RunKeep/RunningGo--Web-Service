@@ -16,8 +16,6 @@ public class UserService: IUserService
         _userRepository = userRepository;
     }
 
-    
-    
     public async Task<IEnumerable<User>> List()
     {
         return await _userRepository.List();
@@ -26,6 +24,9 @@ public class UserService: IUserService
 
     public async Task<UserResponse> Save(User model)
     {
+        var existingUserWithEmail = await _userRepository.FindByEmail(model.Email);
+        if (existingUserWithEmail != null)
+            return new UserResponse("An user with this email already exists.");
         try
         {
             await _userRepository.Add(model);
@@ -44,9 +45,15 @@ public class UserService: IUserService
         var existingUser = await _userRepository.FindById(id);
         if (existingUser == null)
             return new UserResponse("User doesn't exist. Please register it.");
+        
+        var existingUserWithEmail = await _userRepository.FindByEmail(model.Email);
+        if (existingUserWithEmail != null && existingUserWithEmail.Id != id)
+            return new UserResponse("An user with this email already exists.");
 
         existingUser.Name = model.Name;
         existingUser.LastName = model.LastName;
+        existingUser.Email = model.Email;
+        existingUser.Password = model.Password;
         existingUser.Age = model.Age;
         existingUser.Height = model.Height;
         existingUser.Weight = model.Weight;
@@ -90,5 +97,14 @@ public class UserService: IUserService
         if (user == null)
             return new UserResponse("User doesn't exist.");
         return new UserResponse(user);
+    }
+
+    public async Task<UserResponse> SignIn(User user)
+    {
+        var existingUser = await _userRepository.FindByEmailAndPassword(user.Email, user.Password);
+        if (existingUser == null)
+            return new UserResponse("Incorrect email or password. Try again.");
+
+        return new UserResponse(existingUser, DateTime.Now);
     }
 }

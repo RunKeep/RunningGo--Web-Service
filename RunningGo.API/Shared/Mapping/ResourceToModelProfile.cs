@@ -17,6 +17,7 @@ public class ResourceToModelProfile: Profile
     public ResourceToModelProfile()
     {
         CreateMap<SaveUserResource, User>();
+        CreateMap<SignInResource, User>();
         
         CreateMap<SaveFoodResource, Food>();
         CreateMap<SaveDietResource, Diet>();
