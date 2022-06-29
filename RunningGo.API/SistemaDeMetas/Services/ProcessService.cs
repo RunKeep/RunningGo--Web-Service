@@ -31,8 +31,9 @@ public class ProcessService: IProcessService
             return new ProcessResponse($"User with id {model.UserId} doesn't exist");
 
         var existingProcessWithDescription = await _processRepository.FindByDescription(model.Description);
-        if (existingProcessWithDescription != null && existingProcessWithDescription.UserId == model.UserId)
-            return new ProcessResponse($"A process with description {model.Description} already exists");
+        if (existingProcessWithDescription != null)
+            if(existingProcessWithDescription.UserId == model.UserId)
+                return new ProcessResponse($"A process with description {model.Description} already exists");
 
         try
         {
@@ -54,8 +55,9 @@ public class ProcessService: IProcessService
         
 
         var existingProcessWithDescription = await _processRepository.FindByDescription(model.Description);
-        if (existingProcessWithDescription != null && existingProcessWithDescription.UserId == model.UserId && existingProcessWithDescription.Id != id)
-            return new ProcessResponse($"A process with description {model.Description} already exists");
+        if (existingProcessWithDescription != null && existingProcessWithDescription.Id != id)
+            if(existingProcessWithDescription.UserId == model.UserId )
+                return new ProcessResponse($"A process with description {model.Description} already exists");
 
         existingProcess.Description = model.Description;
         existingProcess.State = model.State;
