@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using RunningGo.API.Checkeos.Domain.Models;
 using RunningGo.API.Dietas.Domain.Models;
 using RunningGo.API.Rutinas.Domain.Models;
 using RunningGo.API.Shared.Domain.Models;
@@ -19,8 +20,11 @@ public class EnhancedDbContext : DbContext
     public DbSet<Routine> Routines { set; get; }
     
     public DbSet<Goal> Goals { set; get; }
-    
     public DbSet<Process> Processes { set; get; }
+    
+    public DbSet<Specialist> Specialists { set; get; }
+    public DbSet<Checkup> Checkups { set; get; }
+    public DbSet<Arrange> Arranges { set; get; }
 
     public EnhancedDbContext(DbContextOptions options) : base(options)
     {
@@ -79,6 +83,24 @@ public class EnhancedDbContext : DbContext
         builder.Entity<Goal>().Property(p => p.Description).IsRequired().HasMaxLength(100);
         builder.Entity<Goal>().Property(p => p.Quantity).IsRequired();
 
+        builder.Entity<Specialist>().ToTable("specialists");
+        builder.Entity<Specialist>().HasKey(p => p.Id);
+        builder.Entity<Specialist>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<Specialist>().Property(p => p.Name).IsRequired().HasMaxLength(50);
+        builder.Entity<Specialist>().Property(p => p.Degree).IsRequired().HasMaxLength(50);
+
+        builder.Entity<Checkup>().ToTable("checkups");
+        builder.Entity<Checkup>().HasKey(p => p.Id);
+        builder.Entity<Checkup>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<Checkup>().Property(p => p.Date).IsRequired();
+        builder.Entity<Checkup>().Property(p => p.UserData).IsRequired().HasMaxLength(250);
+        builder.Entity<Checkup>().Property(p => p.Results).IsRequired().HasMaxLength(250);
+
+        builder.Entity<Arrange>().ToTable("arranges");
+        builder.Entity<Arrange>().HasKey(p => p.Id);
+        builder.Entity<Arrange>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<Arrange>().Property(p => p.State).IsRequired().HasMaxLength(10);
+        
         //Relationships
         
         builder.Entity<Food>().HasMany(p => p.Diets)
@@ -104,6 +126,17 @@ public class EnhancedDbContext : DbContext
         builder.Entity<User>().HasMany(p => p.Processes)
             .WithOne(p => p.User)
             .HasForeignKey(p => p.UserId);
+
+        builder.Entity<User>().HasMany(p => p.Checkups)
+            .WithOne(p => p.User)
+            .HasForeignKey(p => p.UserId);
+
+        builder.Entity<Specialist>().HasMany(p => p.Checkups)
+            .WithOne(p => p.Specialist)
+            .HasForeignKey(p => p.SpecialistId);
+
+        builder.Entity<Arrange>().HasOne(p => p.Checkup)
+            .WithOne(p => p.Arrange);
 
         builder.UseSnakeCaseNamingConvention();
     }

@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using RunningGo.API.Checkeos.Domain.Models;
+using RunningGo.API.Checkeos.Resources;
 using RunningGo.API.Dietas.Domain.Models;
 using RunningGo.API.Dietas.Resources;
 using RunningGo.API.Rutinas.Domain.Models;
@@ -24,5 +26,9 @@ public class ModelToResourceProfile: Profile
 
         CreateMap<Goal, GoalResource>();
         CreateMap<Process, ProcessResource>();
+
+        CreateMap<Specialist, SpecialistResource>();
+        CreateMap<Checkup, CheckupResource>();
+        CreateMap<Arrange, ArrangeResource>();
     }
 }

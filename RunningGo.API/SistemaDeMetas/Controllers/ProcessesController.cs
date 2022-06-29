@@ -31,9 +31,6 @@ public class ProcessesController: ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState.GetErrorMessages());
-
         var result = await _processService.FindById(id);
         if (!result.Success)
             return BadRequest(result.Message);

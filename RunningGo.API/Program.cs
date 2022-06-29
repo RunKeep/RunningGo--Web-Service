@@ -1,4 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using RunningGo.API.Checkeos.Domain.Repositories;
+using RunningGo.API.Checkeos.Domain.Services;
+using RunningGo.API.Checkeos.Persistence.Repositories;
+using RunningGo.API.Checkeos.Services;
 using RunningGo.API.Dietas.Domain.Repositories;
 using RunningGo.API.Dietas.Domain.Services;
 using RunningGo.API.Dietas.Persistence.Repositories;
@@ -53,6 +57,13 @@ builder.Services.AddScoped<IGoalService, GoalService>();
 builder.Services.AddScoped<IProcessRepository, ProcessRepository>();
 builder.Services.AddScoped<IProcessService, ProcessService>();
 
+builder.Services.AddScoped<ISpecialistRepository, SpecialistRepository>();
+builder.Services.AddScoped<ISpecialistService, SpecialistService>();
+builder.Services.AddScoped<ICheckupRepository, CheckupRepository>();
+builder.Services.AddScoped<ICheckupService, CheckupService>();
+builder.Services.AddScoped<IArrangeRepository, ArrangeRepository>();
+builder.Services.AddScoped<IArrangeService, ArrangeService>();
+
 builder.Services.AddAutoMapper(typeof(ModelToResourceProfile),
     typeof(ResourceToModelProfile));
 
@@ -65,11 +76,14 @@ using (var context = scope.ServiceProvider.GetService<EnhancedDbContext>())
 }
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+/*if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+}*/
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
