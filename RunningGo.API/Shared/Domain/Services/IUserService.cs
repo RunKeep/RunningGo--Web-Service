@@ -6,4 +6,5 @@ namespace RunningGo.API.Shared.Domain.Services;
 public interface IUserService: IBaseService<User, UserResponse, long>
 {
     Task<UserResponse> FindById(long id);
+    Task<UserResponse> SignIn(User user);
 }

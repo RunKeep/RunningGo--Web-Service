@@ -40,8 +40,8 @@ public class UsersController: ControllerBase
         return Ok(userResource);
     }
 
-    [HttpPost]
-    public async Task<IActionResult> Create([FromBody] SaveUserResource resource)
+    [HttpPost("sign-up")]
+    public async Task<IActionResult> SignUp([FromBody] SaveUserResource resource)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState.GetErrorMessages());
@@ -50,7 +50,22 @@ public class UsersController: ControllerBase
         if (!result.Success)
             return BadRequest(result.Message);
         var userResource = _mapper.Map<User, UserResource>(result.Resource);
-        return Created(nameof(Create),userResource);
+        return Created(nameof(SignUp),userResource);
+    }
+
+    [HttpPost("sign-in")]
+    public async Task<IActionResult> SignIn([FromBody] SignInResource resource)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState.GetErrorMessages());
+
+        var user = _mapper.Map<SignInResource, User>(resource);
+        var result = await _userService.SignIn(user);
+        
+        if (!result.Success)
+            return BadRequest(result.Message);
+
+        return Ok(result.Message);
     }
 
     [HttpPut("{id}")]
